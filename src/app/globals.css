@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	.round {
+		@apply rounded-2xl;
+	}
+}
+@layer components {
+	.download-btn {
+		@apply flex items-center gap-1 px-5 py-2 text-white rounded-full btn-effect bg-gradient-one;
+	}
+	.icon-btn {
+		@apply flex items-center justify-center bg-gradient-to-r from-gradient-one to-gradient-two w-8 h-8 rounded-xl hover:opacity-80;
+	}
+}
+@layer utilities {
+	.flex-center-3 {
+		@apply flex items-center gap-3;
+	}
+	.flex-between {
+		@apply flex items-center justify-between;
+	}
+	.card-header {
+		@apply font-extrabold text-2xl;
+	}
+	.btn-effect {
+		@apply active:scale-95 hover:drop-shadow-lg;
+	}
+	.icon-size {
+		@apply w-5 h-auto;
+	}
+	.card-layout {
+		@apply bg-white round p-6  leading-10 cursor-pointer;
+	}
+}
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+.no-scrollbar {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
