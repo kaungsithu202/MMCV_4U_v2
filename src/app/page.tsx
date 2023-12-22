@@ -1,59 +1,82 @@
 'use client';
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion';
+
+import IconEye from '@/components/icons/IconEye';
+import IconProfile from '@/components/icons/IconProfile';
+import useCVStore from '@/store/useCVStore';
+import { useRouter } from 'next/navigation';
+
+import ProfileDetail from '@/components/home/ProfileDetailSection/ProfileDetail';
 import dynamic from 'next/dynamic';
-import EditableTitle from '@/components/home/EditableTitle';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
+import { EDIT_PROFILE_SUMMARY } from '@/constants/routes';
 
 const ProfileDetailSection = dynamic(
 	() => import('@/components/home/ProfileDetailSection'),
 	{ ssr: false }
 );
-const PdfPreviewSection = dynamic(
-	() => import('@/components/home/PdfPreviewSection'),
-	{
-		ssr: false,
-	}
-);
-import IconDownload from '@/components/icons/IconDownload';
-import { DialogContent, Dialog, DialogTrigger } from '@/components/ui/dialog';
-
-import PdfSection from '@/components/home/PdfSection';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export default function Home() {
-	// const handleDownloadPdf = () => {
-	// 	const capture = document?.querySelector('.pdf-component');
-	// 	html2canvas(capture).then((canvas) => {
-	// 		const imgData = canvas.toDataURL('img/png');
-	// 		const doc = new jsPDF('p', 'mm', 'a4');
-	// 		const componentWidth = doc.internal.pageSize.getWidth();
-	// 		const componentHeight = doc.internal.pageSize.getHeight();
-	// 		doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-	// 		doc.save('kst.pdf');
-	// 	});
-	// };
+	const componentRef = useRef<HTMLDivElement>(null);
+	const router = useRouter();
+	const handlePrint = useReactToPrint({
+		content: () => componentRef.current,
+	});
+	const handleProfileSummary = () => {
+		router.push(EDIT_PROFILE_SUMMARY);
+	};
 	return (
 		<>
-			<section className="w-5/12 flex flex-col gap-6">
+			{/* <ProfileDetailSection /> */}
+			<ProfileDetail />
+			<Accordion type="single" collapsible className="card-layout">
+				<AccordionItem value="item-1">
+					<AccordionTrigger>
+						<div className="flex items-center justify-start gap-6 ">
+							<IconProfile />
+							<p className="card-header">Profile</p>
+						</div>
+					</AccordionTrigger>
+
+					<AccordionContent className=" relative  ">
+						<div
+							onClick={handleProfileSummary}
+							className="flex items-center justify-between"
+						>
+							<p className="text-md font-medium">I am passionate developer</p>
+							<IconEye />
+						</div>
+					</AccordionContent>
+				</AccordionItem>
+			</Accordion>
+			{/* <section className="w-full flex flex-col gap-6">
 				<div className="bg-white round p-6 flex-between">
 					<EditableTitle />
-					<button
-						// onClick={handleDownloadPdf}
-						className="download-btn"
-					>
+					<button onClick={handlePrint} className="download-btn">
 						<p className="text-lg">Download</p>
 						<IconDownload className="icon-size" />
 					</button>
 				</div>
-				<ProfileDetailSection />
+				{!isEditProfileSummary && <ProfileDetailSection />}
+				{!isEditProfileDetail && <ProfileSummary />}
 			</section>
-			<Dialog>
+
+			<FullResume ref={componentRef} /> */}
+
+			{/* <Dialog>
 				<DialogTrigger className="cursor-zoom-in w-5/12 ">
 					<PdfPreviewSection />
 				</DialogTrigger>
 				<DialogContent className="max-w-5xl p-0 rounded-lg  border-none max-h-screen">
 					<PdfSection />
 				</DialogContent>
-			</Dialog>
+			</Dialog> */}
 		</>
 	);
 }

@@ -1,0 +1,14 @@
+.wrapper-class {
+	border: 1px solid #ccc;
+}
+.editor-class {
+	background-color: #e1ccec;
+	padding: 1rem;
+}
+.toolbar-class {
+	border: 1px solid #ccc;
+}
+
+.preview {
+	padding: 1rem;
+}

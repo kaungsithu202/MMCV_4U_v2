@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 type State = {
-	isEditProfileDetail: boolean;
 	profileDetail: {
 		fullName: string;
 		profileImg: string;
@@ -20,20 +19,20 @@ type State = {
 		dateOfBirth: string | undefined;
 	};
 	openedPersonalInformationFields: number[];
+	profileSummary: string;
 };
 
 type Action = {
-	setIsEditProfileDetail: (payload: State['isEditProfileDetail']) => void;
 	setProfileDetail: (payload: State['profileDetail']) => void;
 	setOpenedPersonalInformationFields: (
 		payload: State['openedPersonalInformationFields']
 	) => void;
+	setProfileSummary: (payload: State['profileSummary']) => void;
 };
 
 const useCVStore = create<State & Action>()(
 	persist(
 		(set, get) => ({
-			isEditProfileDetail: false,
 			profileDetail: {
 				fullName: '',
 				profileImg: '',
@@ -51,10 +50,7 @@ const useCVStore = create<State & Action>()(
 				dateOfBirth: '',
 			},
 			openedPersonalInformationFields: [],
-			setIsEditProfileDetail: (payload) =>
-				set(() => ({
-					isEditProfileDetail: payload,
-				})),
+			profileSummary: '',
 			setProfileDetail: (payload) =>
 				set((state) => ({
 					profileDetail: { ...state.profileDetail, ...payload },
@@ -63,11 +59,15 @@ const useCVStore = create<State & Action>()(
 				set(() => ({
 					openedPersonalInformationFields: payload,
 				})),
+			setProfileSummary: (payload) =>
+				set(() => ({
+					profileSummary: payload,
+				})),
 		}),
 
 		{
-			name: 'cv-storage', // name of the item in the storage (must be unique)
-			storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+			name: 'cv-storage',
+			storage: createJSONStorage(() => sessionStorage),
 		}
 	)
 );

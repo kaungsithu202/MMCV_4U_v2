@@ -32,7 +32,7 @@
 		@apply w-5 h-auto;
 	}
 	.card-layout {
-		@apply bg-white round p-6  leading-10 cursor-pointer;
+		@apply bg-white round py-6 px-10  leading-10 cursor-pointer drop-shadow-md;
 	}
 }
 .no-scrollbar::-webkit-scrollbar {

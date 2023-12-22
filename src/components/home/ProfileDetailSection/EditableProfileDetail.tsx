@@ -116,7 +116,6 @@ const EditableProfileDetail = () => {
 	const {
 		profileDetail,
 		setProfileDetail,
-		setIsEditProfileDetail,
 		openedPersonalInformationFields,
 		setOpenedPersonalInformationFields,
 	} = useCVStore();
@@ -144,7 +143,6 @@ const EditableProfileDetail = () => {
 	});
 	const watchedFields = form.watch();
 
-	console.log('currentOpenFields', currentOpenFields);
 	const dynamicAddFieldButtons = personalInformationFields
 		.map((field) => field)
 		.filter((field) => !currentOpenFields.includes(field.id));
@@ -192,10 +190,6 @@ const EditableProfileDetail = () => {
 		};
 		convertProfileImageToBase64();
 	}, [profileImgValue]);
-
-	const cancelOnClickHandler = () => {
-		setIsEditProfileDetail(false);
-	};
 
 	const handleCurrentOpenFields = (payload: number[]) => {
 		setCurrentOpenFields(payload);
@@ -486,7 +480,7 @@ const EditableProfileDetail = () => {
 						</div>
 					</div>
 					<div className="flex items-end justify-end gap-3 mt-5">
-						<Button variant="outline" size="lg" onClick={cancelOnClickHandler}>
+						<Button variant="outline" size="lg">
 							Cancel
 						</Button>
 						<Button type="submit" size="lg">

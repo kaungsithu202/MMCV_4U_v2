@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import ogImage from './logo-color.png';
+import EditableTitle from '@/components/home/EditableTitle';
+import IconDownload from '@/components/icons/IconDownload';
+import FullResume from '@/components/home/FullResume';
 
 const nunito = localFont({
 	src: '../../public/fonts/Nunito-VariableFont_wght.ttf',
@@ -34,7 +37,21 @@ export default function RootLayout({
 							<div className="w-10/12 bg-gray-200 h-16 rounded-2xl"></div>
 						</div>
 					</div>
-					{children}
+					{/* {children} */}
+					<section className="w-full flex flex-col gap-6">
+						<div className="bg-white round p-6 flex-between">
+							<EditableTitle />
+							<button className="download-btn">
+								<p className="text-lg">Download</p>
+								<IconDownload className="icon-size" />
+							</button>
+						</div>
+						{children}
+						{/* {!isEditProfileSummary && <ProfileDetailSection />}
+				{!isEditProfileDetail && <ProfileSummary />} */}
+					</section>
+
+					<FullResume />
 				</div>
 			</body>
 		</html>

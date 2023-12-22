@@ -6,13 +6,7 @@ import useCVStore from '@/store/useCVStore';
 
 const ProfileDetailSection = () => {
 	const { isEditProfileDetail } = useCVStore();
-	return (
-		<IfElse
-			isTrue={isEditProfileDetail}
-			ifBlock={<EditableProfileDetail />}
-			elseBlock={<ProfileDetail />}
-		/>
-	);
+	return <EditableProfileDetail />;
 };
 
 export default ProfileDetailSection;

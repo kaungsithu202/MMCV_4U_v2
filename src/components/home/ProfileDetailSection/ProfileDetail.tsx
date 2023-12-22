@@ -4,17 +4,24 @@ import IconAddress from '@/components/icons/IconAddress';
 import IconEdit from '@/components/icons/IconEdit';
 import IconEmail from '@/components/icons/IconEmail';
 import IconPhone from '@/components/icons/IconPhone';
+import { EDIT_PROFILE_DETAIL } from '@/constants/routes';
+import useStore from '@/hooks/useStore';
 import { cn } from '@/lib/utils';
 import useCVStore from '@/store/useCVStore';
 import Lottie from 'lottie-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const ProfileDetail = () => {
-	const { setIsEditProfileDetail, profileDetail } = useCVStore();
+	// const bears = useStore(useBearStore, (state) => state.bears);
+	const profileDetail = useStore(useCVStore, (state) => state.profileDetail);
+
+	if (!profileDetail) return;
 	const { fullName, profileImg, jobTitle, email, phone, address } =
 		profileDetail;
-	const handleProfileDeital = () => {
-		setIsEditProfileDetail(true);
+	const router = useRouter();
+	const handleProfileDetail = () => {
+		router.push(EDIT_PROFILE_DETAIL);
 	};
 	const isEmptyField = (state: string, text: string) => {
 		return state?.length === 0 ? text : state;
@@ -25,7 +32,7 @@ const ProfileDetail = () => {
 	return (
 		<div
 			className="card-layout flex justify-between items-start "
-			onClick={handleProfileDeital}
+			onClick={handleProfileDetail}
 		>
 			<div>
 				<p className={cn('text-xl font-semibold', dynamicColor(fullName))}>
