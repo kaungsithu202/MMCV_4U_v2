@@ -32,7 +32,7 @@ const ActionBtns = ({
 				<Button size="lg" variant="outline" onClick={onCancel}>
 					Cancel
 				</Button>
-				<Button size="lg" onClick={onSave}>
+				<Button size="lg" type="submit" onClick={onSave}>
 					Save
 				</Button>
 			</div>

@@ -9,7 +9,7 @@ import {
 import { Control } from 'react-hook-form';
 
 interface Props {
-	control: Control;
+	control: Control<any>;
 	name: string;
 	placeholder: string;
 	selectItems: any[];

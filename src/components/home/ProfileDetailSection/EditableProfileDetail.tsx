@@ -202,7 +202,7 @@ const EditableProfileDetail = () => {
 		setCurrentOpenFields(removedFields);
 	};
 
-	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+	const onSubmit = (values: z.infer<typeof formSchema>) => {
 		const {
 			fullName,
 			jobTitle,

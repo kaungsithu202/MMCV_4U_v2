@@ -1,8 +1,8 @@
 'use client';
+import parse from 'html-react-parser';
 import Image from 'next/image';
 import Link from 'next/link';
 import { RefObject, forwardRef } from 'react';
-import parse from 'html-react-parser';
 
 import IconCalendar from '@/components/icons/IconCalendar';
 import IconEmail from '@/components/icons/IconEmail';
@@ -18,6 +18,7 @@ import useCVStore from '@/store/useCVStore';
 
 const FullResume = forwardRef((props, ref) => {
 	const profileDetail = useStore(useCVStore, (state) => state.profileDetail);
+
 	const profileSummary = useStore(useCVStore, (state) => state.profileSummary);
 
 	const parsedProfileSummary = parse(String(profileSummary));
@@ -25,7 +26,7 @@ const FullResume = forwardRef((props, ref) => {
 	return (
 		<div
 			ref={ref as RefObject<HTMLDivElement>}
-			className="min-h-screen w-full grid grid-cols-5 pdf-component"
+			className="min-h-screen  h-[calc(100vh-1.5rem)] w-full grid grid-cols-5 pdf-component"
 		>
 			<div className="bg-[#672d50] p-6 items-center text-white col-span-2 ">
 				<h1 className="text-2xl font-semibold ">{profileDetail?.fullName}</h1>
