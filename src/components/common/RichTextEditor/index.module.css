@@ -3,7 +3,7 @@
 }
 .editor-class {
 	background-color: #e1ccec;
-	padding: 1rem;
+	padding-inline: 1rem;
 }
 .toolbar-class {
 	border: 1px solid #ccc;

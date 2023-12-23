@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -19,7 +20,7 @@ type State = {
 		dateOfBirth: string | undefined;
 	};
 	openedPersonalInformationFields: number[];
-	profileSummary: string;
+	profileSummary: ReactNode | '';
 };
 
 type Action = {

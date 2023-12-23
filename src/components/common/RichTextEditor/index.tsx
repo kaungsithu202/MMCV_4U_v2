@@ -7,11 +7,10 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styles from './index.module.css';
 
 interface Props {
-	convertedContent: ReactNode | null;
 	handleTextEditor: (payload: ReactNode) => void;
 }
 
-const RichTextEditor = ({ convertedContent, handleTextEditor }: Props) => {
+const RichTextEditor = ({ handleTextEditor }: Props) => {
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
 	);

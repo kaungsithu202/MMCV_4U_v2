@@ -12,7 +12,7 @@ export const convertFileToBase64 = (file: File): Promise<string> => {
 		reader.onload = () => {
 			if (typeof reader.result === 'string') {
 				const base64Img = reader.result;
-				resolve(base64Img); // Resolve the promise with the Base64 data
+				resolve(base64Img);
 			} else {
 				console.error('Error reading the file.');
 				reject(new Error('Error reading the file'));

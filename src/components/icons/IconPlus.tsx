@@ -9,7 +9,7 @@ const IconPlus = (props: ISvgIcon) => {
 			width={24}
 			height={24}
 			viewBox="0 0 24 24"
-			stroke-width={4}
+			strokeWidth={4}
 			stroke="currentColor"
 			fill="none"
 			strokeLinecap="round"

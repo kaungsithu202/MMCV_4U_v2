@@ -1,11 +1,13 @@
 'use client';
+import { days, getMonths, lastHundredYears } from '@/lib/date_helper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { days, months, lastHundredYears } from '@/lib/date_helper';
 import moment from 'moment';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
+import AddFieldButton from '@/components/common/AddFieldButton';
 import IfElse from '@/components/common/IfElse';
+import IconTrash from '@/components/icons/IconTrash';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -16,11 +18,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { convertFileToBase64 } from '@/lib/utils';
-import useCVStore from '@/store/useCVStore';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import AddFieldButton from '@/components/common/AddFieldButton';
 import {
 	Select,
 	SelectContent,
@@ -28,7 +25,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import IconTrash from '@/components/icons/IconTrash';
+import { convertFileToBase64 } from '@/lib/utils';
+import useCVStore from '@/store/useCVStore';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface IPersonalInformation {
 	id: number;
@@ -113,6 +114,8 @@ const finalSchema = { ...baseSchema, ...personalInformationSchema };
 const formSchema = z.object(finalSchema);
 
 const EditableProfileDetail = () => {
+	const router = useRouter();
+
 	const {
 		profileDetail,
 		setProfileDetail,
@@ -141,7 +144,6 @@ const EditableProfileDetail = () => {
 			years: '',
 		},
 	});
-	const watchedFields = form.watch();
 
 	const dynamicAddFieldButtons = personalInformationFields
 		.map((field) => field)
@@ -194,10 +196,12 @@ const EditableProfileDetail = () => {
 	const handleCurrentOpenFields = (payload: number[]) => {
 		setCurrentOpenFields(payload);
 	};
+
 	const handleOnCloseCurrentOpenFields = (id: number) => {
 		const removedFields = currentOpenFields.filter((field) => id !== field);
 		setCurrentOpenFields(removedFields);
 	};
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		const {
 			fullName,
@@ -234,7 +238,11 @@ const EditableProfileDetail = () => {
 			dateOfBirth: formattedDateOfBirth,
 		});
 		setOpenedPersonalInformationFields(currentOpenFields);
-		setIsEditProfileDetail(false);
+		router.back();
+	};
+
+	const handleCancel = () => {
+		router.push('/');
 	};
 
 	// useEffect(() => {
@@ -392,7 +400,7 @@ const EditableProfileDetail = () => {
 																			<SelectValue placeholder="Month" />
 																		</SelectTrigger>
 																		<SelectContent>
-																			{months.map((month) => (
+																			{getMonths().map((month) => (
 																				<SelectItem value={month}>
 																					{month}
 																				</SelectItem>
@@ -480,7 +488,7 @@ const EditableProfileDetail = () => {
 						</div>
 					</div>
 					<div className="flex items-end justify-end gap-3 mt-5">
-						<Button variant="outline" size="lg">
+						<Button variant="outline" size="lg" onClick={handleCancel}>
 							Cancel
 						</Button>
 						<Button type="submit" size="lg">
