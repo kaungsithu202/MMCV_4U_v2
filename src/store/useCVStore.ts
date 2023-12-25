@@ -21,6 +21,28 @@ type State = {
 	};
 	openedPersonalInformationFields: number[];
 	profileSummary: ReactNode | '';
+	experience: {
+		expJobTitle: string;
+		expCity: string;
+		expCountry: string;
+		startMonths: string;
+		startYears: string;
+		endMonths: string;
+		endYears: string;
+		expSummary: ReactNode | '';
+	};
+	skills: {
+		skill: string;
+		subSkills: string | undefined;
+	}[];
+	projects: {
+		projectTitle: string;
+		startMonths: string | '';
+		startYears: string | '';
+		endMonths: string | '';
+		endYears: string | '';
+		projectSummary: ReactNode | '';
+	};
 };
 
 type Action = {
@@ -29,6 +51,9 @@ type Action = {
 		payload: State['openedPersonalInformationFields']
 	) => void;
 	setProfileSummary: (payload: State['profileSummary']) => void;
+	setExperience: (payload: State['experience']) => void;
+	setSkills: (payload: State['skills']) => void;
+	setProjects: (payload: State['projects']) => void;
 };
 
 const useCVStore = create<State & Action>()(
@@ -52,6 +77,25 @@ const useCVStore = create<State & Action>()(
 			},
 			openedPersonalInformationFields: [],
 			profileSummary: '',
+			experience: {
+				expJobTitle: '',
+				expCity: '',
+				expCountry: '',
+				startMonths: '',
+				startYears: '',
+				endMonths: '',
+				endYears: '',
+				expSummary: '',
+			},
+			skills: [],
+			projects: {
+				projectTitle: '',
+				startMonths: '',
+				startYears: '',
+				endMonths: '',
+				endYears: '',
+				projectSummary: '',
+			},
 			setProfileDetail: (payload) =>
 				set((state) => ({
 					profileDetail: { ...state.profileDetail, ...payload },
@@ -63,6 +107,18 @@ const useCVStore = create<State & Action>()(
 			setProfileSummary: (payload) =>
 				set(() => ({
 					profileSummary: payload,
+				})),
+			setExperience: (payload) =>
+				set((state) => ({
+					experience: { ...state.experience, ...payload },
+				})),
+			setSkills: (payload) =>
+				set((state) => ({
+					skills: payload,
+				})),
+			setProjects: (payload) =>
+				set((state) => ({
+					projects: { ...state.projects, ...payload },
 				})),
 		}),
 

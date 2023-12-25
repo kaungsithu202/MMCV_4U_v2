@@ -23,11 +23,15 @@ const RichTextEditor = ({ handleTextEditor }: Props) => {
 		},
 		list: {
 			inDropdown: false,
-
 			options: ['unordered', 'ordered'],
 		},
 		textAlign: {
 			options: ['left', 'center', 'right'],
+		},
+		link: {
+			showOpenOptionOnHover: true,
+			defaultTargetOption: '_self',
+			options: ['link', 'unlink'],
 		},
 	};
 

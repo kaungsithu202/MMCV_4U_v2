@@ -1,5 +1,4 @@
 import ProfileSummaryEditor from '@/components/home/ProfileSummary/ProfileSummaryEditor';
-import React from 'react';
 
 const page = () => {
 	return (

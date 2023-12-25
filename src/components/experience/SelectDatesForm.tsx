@@ -8,6 +8,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { getMonths, lastHundredYears } from '@/lib/date_helper';
+import { useMemo } from 'react';
 import { Control } from 'react-hook-form';
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const SelectDatesForm = ({ control, label, monthsName, yearsName }: Props) => {
+	const get100Years = useMemo(() => lastHundredYears(), []);
 	return (
 		<>
 			<div className="w-1/2">
@@ -58,7 +60,7 @@ const SelectDatesForm = ({ control, label, monthsName, yearsName }: Props) => {
 								</SelectTrigger>
 								<SelectContent className="bg-gray-50 rounded-md">
 									<div className="grid grid-cols-4 gap-2 p-1 ">
-										{lastHundredYears.map((year) => (
+										{get100Years.map((year) => (
 											<SelectItem
 												className="px-6 py-3 border bg-white "
 												value={year.toString()}

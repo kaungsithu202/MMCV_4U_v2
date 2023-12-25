@@ -2,6 +2,7 @@
 import parse from 'html-react-parser';
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { RefObject, forwardRef } from 'react';
 
 import IconCalendar from '@/components/icons/IconCalendar';
@@ -15,18 +16,20 @@ import IconUser from '@/components/icons/IconUser';
 
 import useStore from '@/hooks/useStore';
 import useCVStore from '@/store/useCVStore';
-
+import useQueryParams from '@/hooks/useQueryParams';
 const FullResume = forwardRef((props, ref) => {
 	const profileDetail = useStore(useCVStore, (state) => state.profileDetail);
-
 	const profileSummary = useStore(useCVStore, (state) => state.profileSummary);
+	const exp = useStore(useCVStore, (state) => state.experience);
+	const skills = useStore(useCVStore, (state) => state.skills);
+	const projects = useStore(useCVStore, (state) => state.projects);
 
 	const parsedProfileSummary = parse(String(profileSummary));
-
+	console.log('sss', exp?.expSummary);
 	return (
 		<div
 			ref={ref as RefObject<HTMLDivElement>}
-			className="min-h-screen  h-[calc(100vh-1.5rem)] w-full grid grid-cols-5 pdf-component"
+			className="min-h-screen  overflow-scroll no-scrollbar w-full grid grid-cols-5 pdf-component"
 		>
 			<div className="bg-[#672d50] p-6 items-center text-white col-span-2 ">
 				<h1 className="text-2xl font-semibold ">{profileDetail?.fullName}</h1>
@@ -98,15 +101,54 @@ const FullResume = forwardRef((props, ref) => {
 						</div>
 					)}
 				</div>
-				<section className="my-3">
-					<h2 className="text-xs font-bold uppercase">Profile</h2>
-					<p className="text-xxs mt-1">{parsedProfileSummary}</p>
-				</section>
+				{parsedProfileSummary !== '' && (
+					<section className="my-3">
+						<h2 className="text-xs font-bold uppercase">Profile</h2>
+						<p className="text-xxs mt-1">{parsedProfileSummary}</p>
+					</section>
+				)}
+				{skills?.length !== 0 && (
+					<div>
+						<h2 className="text-xs font-bold uppercase">Skills</h2>
+						{skills?.map?.((s) => (
+							<p className="text-xxs mt-1">{s.skill}</p>
+						))}
+					</div>
+				)}
 			</div>
-			<div className="col-span-3 bg-white">
-				{/* <button onClick={handleDownloadPdf}>Download</button> */}
-				<div>asd</div>
-			</div>
+			<section className="col-span-3 p-6 text-black bg-white flex flex-col gap-2">
+				{exp?.expJobTitle && (
+					<div>
+						<h3 className="font-bold my-1">EXPERIENCE</h3>
+						<h2 className="text-xs italic  font-semibold">
+							{exp?.expJobTitle}
+						</h2>
+						<p className="text-xxs">
+							{exp?.startMonths} {exp?.startYears} - present {exp?.endMonths}{' '}
+							{exp?.endYears} | {exp?.expCity} {exp?.expCountry && ','}
+							{exp?.expCountry}
+						</p>
+						<p className="text-xxs leading-tight">
+							{parse(String(exp?.expSummary))}
+						</p>
+					</div>
+				)}
+				<div>
+					<h3 className="font-bold my-1">PROJECTS</h3>
+					<h2 className="text-xs italic  font-semibold">
+						{projects?.projectTitle}
+					</h2>
+					{projects?.startMonths && (
+						<p className="text-xxs">
+							{projects?.startMonths} {projects?.startYears} -{' '}
+							{projects?.endMonths} {projects?.endYears}
+						</p>
+					)}
+					<div className="text-xxs leading-tight list-disc ">
+						{parse(String(projects?.projectSummary))}
+					</div>
+				</div>
+			</section>
 		</div>
 	);
 });

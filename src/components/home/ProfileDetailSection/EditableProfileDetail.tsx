@@ -421,7 +421,7 @@ const EditableProfileDetail = () => {
 																			<SelectValue placeholder="Year" />
 																		</SelectTrigger>
 																		<SelectContent>
-																			{lastHundredYears.map((year) => (
+																			{lastHundredYears().map((year) => (
 																				<SelectItem value={year.toString()}>
 																					{year}
 																				</SelectItem>

@@ -1,2 +1,2 @@
-export const EDIT_PROFILE_DETAIL = '/edit-profile-detail';
-export const EDIT_PROFILE_SUMMARY = '/edit-profile-summary';
+export const EDIT_PROFILE_DETAIL = '/profile-detail';
+export const EDIT_PROFILE_SUMMARY = '/profile-summary';

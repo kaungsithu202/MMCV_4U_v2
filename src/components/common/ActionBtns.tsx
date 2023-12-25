@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 interface Props {
 	onDelete: () => void;
 	onCancel: () => void;
-	onSave: () => void;
+	onSave?: () => void;
 	isShowDelete?: boolean;
 	styleClass: string;
 }

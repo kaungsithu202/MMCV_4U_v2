@@ -18,7 +18,7 @@ const PageLayout = ({ children }: Props) => {
 
 	return (
 		<>
-			<div className="flex w-full h-[calc(100vh-1.5rem)] bg-primary max-h-screen pt-6 gap-6">
+			<div className="flex w-full  bg-violet-200 min-h-screen pt-6  gap-6">
 				<DashboardSkeletons />
 				<div className="w-full flex flex-col gap-6">
 					<div className="bg-white round p-6 flex-between">
@@ -30,6 +30,7 @@ const PageLayout = ({ children }: Props) => {
 					</div>
 					{children}
 				</div>
+
 				<FullResume ref={componentRef} />
 			</div>
 		</>

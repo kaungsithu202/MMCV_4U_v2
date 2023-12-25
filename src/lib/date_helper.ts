@@ -21,7 +21,7 @@ export const getMonths = () => {
 	return moment.months();
 };
 
-export const lastHundredYears = (() => {
+export const lastHundredYears = () => {
 	const currentYear = new Date().getFullYear();
 	const years = [];
 
@@ -30,4 +30,4 @@ export const lastHundredYears = (() => {
 	}
 
 	return years;
-})();
+};
