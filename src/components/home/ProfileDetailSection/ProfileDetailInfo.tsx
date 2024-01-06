@@ -4,7 +4,7 @@ import IconAddress from '@/components/icons/IconAddress';
 import IconEdit from '@/components/icons/IconEdit';
 import IconEmail from '@/components/icons/IconEmail';
 import IconPhone from '@/components/icons/IconPhone';
-import { EDIT_PROFILE_DETAIL } from '@/constants/routes';
+import { PROFILE_DETAIL_URL } from '@/constants/routes';
 import useStore from '@/hooks/useStore';
 import { cn } from '@/lib/utils';
 import useCVStore from '@/store/useCVStore';
@@ -12,20 +12,24 @@ import Lottie from 'lottie-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-const ProfileDetail = () => {
-	// const bears = useStore(useBearStore, (state) => state.bears);
+const ProfileDetailInfo = () => {
 	const profileDetail = useStore(useCVStore, (state) => state.profileDetail);
 
 	if (!profileDetail) return;
+
 	const { fullName, profileImg, jobTitle, email, phone, address } =
 		profileDetail;
+
 	const router = useRouter();
+
 	const handleProfileDetail = () => {
-		router.push(EDIT_PROFILE_DETAIL);
+		router.push(PROFILE_DETAIL_URL);
 	};
+
 	const isEmptyField = (state: string, text: string) => {
 		return state?.length === 0 ? text : state;
 	};
+
 	const dynamicColor = (state: string) => {
 		return state?.trim().length === 0 ? 'text-color-placeholder' : 'text-black';
 	};
@@ -84,4 +88,4 @@ const ProfileDetail = () => {
 	);
 };
 
-export default ProfileDetail;
+export default ProfileDetailInfo;

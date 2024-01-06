@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 
 interface Props {
 	name: string;
-	id: number;
+	id: string | number;
 	onClick: (payload: number[]) => void;
 	isOpenField: number[];
 }

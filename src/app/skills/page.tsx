@@ -5,28 +5,20 @@ import { Form } from '@/components/ui/form';
 import useCVStore from '@/store/useCVStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 import { useStore } from 'zustand';
 
 const Skills = () => {
-	const [convertedContent, setConvertedContent] = useState<ReactNode | null>(
-		null
-	);
-
 	const skills = useStore(useCVStore, (state) => state.skills);
 	const setSkills = useStore(useCVStore, (state) => state.setSkills);
 
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const search = searchParams.get('q');
-
-	console.log('search', search);
-	console.log('skills', skills);
-
-	// const found = skills.find((s) => s.skill === search);
+	const queryId = searchParams.get('q');
 
 	const formSchema = z.object({
 		skill: z.string(),
@@ -38,48 +30,58 @@ const Skills = () => {
 		// mode: 'onChange',
 	});
 
-	const { control, handleSubmit, setValue } = form;
+	const { control, handleSubmit, setValue, watch } = form;
+
+	const editSkill = skills.filter((s) => s.id === queryId).at(0);
 
 	useEffect(() => {
-		if (search) {
-			setValue('skill', search);
+		if (queryId) {
+			setValue('skill', editSkill!.skill);
+			setValue('subSkills', editSkill!.subSkills);
 		}
-	}, [search]);
+	}, [queryId]);
 
 	const onSubmit = (values: z.infer<typeof formSchema>) => {
 		const { skill, subSkills } = values;
-		if (search) {
-			const updatedSkills = skills.map((s) => {
-				if (s.skill === search) {
-					return {
-						skill,
-						subSkills: '',
-					};
-				} else {
-					return {
-						skill: s.skill,
-						subSkills: '',
-					};
-				}
-			});
 
-			setSkills(updatedSkills);
+		if (queryId) {
+			if (editSkill?.skill === skill && editSkill?.subSkills === subSkills) {
+				return;
+			} else {
+				const updatedSkills = skills.map(
+					(s: { id: string; skill: string; subSkills: string | undefined }) => {
+						if (s.id === queryId) {
+							return {
+								id: queryId,
+								skill,
+								subSkills,
+							};
+						} else {
+							return s;
+						}
+					}
+				);
+
+				setSkills(updatedSkills);
+				router.back();
+			}
 			return;
 		}
-		setSkills([
-			...skills,
-			{
-				skill,
-				subSkills,
-			},
-		]);
+
+		setSkills([...skills, { id: uuidv4(), skill, subSkills }]);
 		router.back();
 	};
 
 	const handleCancel = () => {
 		router.back();
 	};
-	console.log('skills', skills);
+
+	const handleDelete = () => {
+		const selectedSkill = skills.filter((s) => s.id !== queryId);
+		setSkills(selectedSkill);
+		router.back();
+	};
+
 	return (
 		<>
 			<Form {...form}>
@@ -103,8 +105,12 @@ const Skills = () => {
 							placeholder="Enter information or sub-skills"
 						/>
 					</section>
-					<ActionBtns onCancel={handleCancel} styleClass="mt-3" />
-					{/* <Button type="submit">Click</Button> */}
+					<ActionBtns
+						onCancel={handleCancel}
+						styleClass="mt-3"
+						onDelete={handleDelete}
+						isShowDelete={Boolean(queryId)}
+					/>
 				</form>
 			</Form>
 		</>

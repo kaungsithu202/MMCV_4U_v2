@@ -32,6 +32,7 @@ type State = {
 		expSummary: ReactNode | '';
 	};
 	skills: {
+		id: string;
 		skill: string;
 		subSkills: string | undefined;
 	}[];

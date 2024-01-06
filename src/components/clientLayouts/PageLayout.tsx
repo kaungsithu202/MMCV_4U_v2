@@ -15,12 +15,11 @@ const PageLayout = ({ children }: Props) => {
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current,
 	});
-
 	return (
 		<>
-			<div className="flex w-full  bg-violet-200 min-h-screen pt-6  gap-6">
+			<div className="flex w-full max-h-screen  bg-violet-200  py-6  gap-6 ">
 				<DashboardSkeletons />
-				<div className="w-full flex flex-col gap-6">
+				<div className="w-full flex flex-col gap-6 ">
 					<div className="bg-white round p-6 flex-between">
 						<EditableTitle />
 						<button onClick={handlePrint} className="download-btn">
@@ -28,7 +27,9 @@ const PageLayout = ({ children }: Props) => {
 							<IconDownload className="icon-size" />
 						</button>
 					</div>
-					{children}
+					<div className="overflow-y-scroll max-h-[calc(100vh-48px)] no-scrollbar">
+						{children}
+					</div>
 				</div>
 
 				<FullResume ref={componentRef} />

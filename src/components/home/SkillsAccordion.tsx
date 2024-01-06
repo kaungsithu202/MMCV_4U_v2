@@ -1,21 +1,18 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
 import { Reorder } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import CustomAccordion from '../common/CustomAccordion';
 
-import IconEye from '../icons/IconEye';
-import IconProfile from '../icons/IconProfile';
-import IconSkill from '../icons/IconSkill';
-import IconOrder from '../icons/IconOrder';
-import { useStore } from 'zustand';
 import useCVStore from '@/store/useCVStore';
-import { Button } from '../ui/button';
+import { useStore } from 'zustand';
+import IconOrder from '../icons/IconOrder';
 import IconPlus from '../icons/IconPlus';
-import IconEdit from '../icons/IconEdit';
+import IconSkill from '../icons/IconSkill';
+import { Button } from '../ui/button';
 
-import useQueryParams from '@/hooks/useQueryParams';
+import IconEditCircle from '../icons/IconEditCircle';
 const SkillsAccordion = () => {
 	const skills = useStore(useCVStore, (state) => state.skills);
 	const setSkills = useStore(useCVStore, (state) => state.setSkills);
@@ -32,7 +29,6 @@ const SkillsAccordion = () => {
 		router.push(`/skills?q=${payload}`);
 	};
 
-	console.log('skills', skills);
 	return (
 		<CustomAccordion
 			triggerSection={
@@ -44,7 +40,6 @@ const SkillsAccordion = () => {
 			contentSection={
 				<>
 					<Reorder.Group
-						// onClick={handleSkills}
 						className="flex flex-col"
 						axis="y"
 						values={skills}
@@ -52,7 +47,7 @@ const SkillsAccordion = () => {
 					>
 						{skills.map((s) => (
 							<Reorder.Item
-								key={s.skill}
+								key={s.id}
 								className="flex items-center justify-between gap-3 py-3 px-3 rounded-md my-1 bg-violet-50 hover:bg-violet-200"
 								value={s}
 							>
@@ -60,11 +55,15 @@ const SkillsAccordion = () => {
 									<IconOrder />{' '}
 									<p className="text-base font-semibold">{s.skill}</p>
 								</div>
-								<IconEdit onClick={() => handleEditSkill(s.skill)} />
+								<IconEditCircle
+									className="w-5 h-auto"
+									onClick={() => handleEditSkill(s.id)}
+								/>
 							</Reorder.Item>
 						))}
 					</Reorder.Group>
-					<div className="flex items-center justify-center">
+
+					<div className="flex items-center justify-center mt-3">
 						<Button
 							variant="outline"
 							className="rounded-3xl border-gray-200 border-4 "

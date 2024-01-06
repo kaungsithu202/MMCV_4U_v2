@@ -6,6 +6,7 @@ import EditableTitle from '@/components/home/EditableTitle';
 import IconDownload from '@/components/icons/IconDownload';
 import FullResume from '@/components/home/FullResume';
 import PageLayout from '@/components/clientLayouts/PageLayout';
+import { Suspense } from 'react';
 
 const nunito = localFont({
 	src: '../../public/fonts/Nunito-VariableFont_wght.ttf',

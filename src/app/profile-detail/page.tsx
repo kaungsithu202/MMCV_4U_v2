@@ -1,8 +1,8 @@
-import EditableProfileDetail from '@/components/home/ProfileDetailSection/EditableProfileDetail';
+import ProfileDetail from '@/components/ProfileDetails';
 import React from 'react';
 
 const page = () => {
-	return <EditableProfileDetail />;
+	return <ProfileDetail />;
 };
 
 export default page;

@@ -25,14 +25,12 @@ const SelectForm = ({ control, name, placeholder, selectItems }: Props) => {
 					<SelectTrigger className="p-5">
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-50 rounded-md">
-						<div className="grid grid-cols-3 grid-rows-4 gap-2 p-1 ">
-							{selectItems?.map((item) => (
-								<SelectItem value={item} className="px-6 py-3 border bg-white ">
-									{item}
-								</SelectItem>
-							))}
-						</div>
+					<SelectContent>
+						{selectItems?.map((item) => (
+							<SelectItem value={item} className="px-6 py-3 border bg-white ">
+								{item}
+							</SelectItem>
+						))}
 					</SelectContent>
 				</Select>
 			)}
