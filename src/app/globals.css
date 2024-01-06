@@ -150,3 +150,14 @@ ul {
 		opacity: 0.8;
 	}
 }
+
+.quill {
+	width: 32.5rem;
+}
+
+.ql-container.ql-snow {
+	height: 5rem;
+}
+.ql-toolbar.ql-snow {
+	@apply bg-gradient-to-r from-[#d8b4fe] to-[#e879f9];
+}

@@ -17,9 +17,9 @@ const PageLayout = ({ children }: Props) => {
 	});
 	return (
 		<>
-			<div className="flex w-full max-h-screen  bg-violet-200  py-6  gap-6 ">
+			<div className="flex w-full max-h-screen  bg-violet-200    gap-6 ">
 				<DashboardSkeletons />
-				<div className="w-full flex flex-col gap-6 ">
+				<div className="w-full flex flex-col gap-6 py-6 ">
 					<div className="bg-white round p-6 flex-between">
 						<EditableTitle />
 						<button onClick={handlePrint} className="download-btn">

@@ -29,7 +29,7 @@ const FullResume = forwardRef((props, ref) => {
 	return (
 		<div
 			ref={ref as RefObject<HTMLDivElement>}
-			className="max-h-screen overflow-scroll no-scrollbar w-full h-[calc(100vh-24px)] grid grid-cols-5 pdf-component"
+			className=" overflow-scroll no-scrollbar w-full  min-h-screen grid grid-cols-5 pdf-component"
 		>
 			<div className="bg-[#672d50] p-6 items-center text-white col-span-2 ">
 				<h1 className="text-2xl font-semibold ">{profileDetail?.fullName}</h1>
