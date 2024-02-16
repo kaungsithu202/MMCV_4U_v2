@@ -17,6 +17,8 @@ const SkillsAccordion = () => {
 	const skills = useStore(useCVStore, (state) => state.skills);
 	const setSkills = useStore(useCVStore, (state) => state.setSkills);
 
+	if (skills?.length === 0) return null;
+
 	const [items, setItems] = useState(skills);
 
 	const router = useRouter();
@@ -48,7 +50,7 @@ const SkillsAccordion = () => {
 						{skills.map((s) => (
 							<Reorder.Item
 								key={s.id}
-								className="flex items-center justify-between gap-3 py-3 px-3 rounded-md my-1 bg-violet-50 hover:bg-violet-200"
+								className="flex items-center justify-between gap-3 py-3 px-3 rounded-md my-1 bg-violet-50 hover:bg-violet-100"
 								value={s}
 							>
 								<div className="flex items-center justify-start gap-3">

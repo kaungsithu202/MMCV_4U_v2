@@ -21,7 +21,7 @@ const CustomAccordion = ({ triggerSection, contentSection }: Props) => {
 			<AccordionItem value="item-1">
 				<AccordionTrigger>{triggerSection}</AccordionTrigger>
 
-				<AccordionContent className=" relative  ">
+				<AccordionContent className="relative">
 					{contentSection}
 				</AccordionContent>
 			</AccordionItem>

@@ -159,5 +159,5 @@ ul {
 	height: 5rem;
 }
 .ql-toolbar.ql-snow {
-	@apply bg-gradient-to-r from-[#d8b4fe] to-[#e879f9];
+	@apply bg-purple-300;
 }

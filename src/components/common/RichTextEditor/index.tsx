@@ -1,12 +1,10 @@
 'use client';
-import dynamic, { noSSR } from 'next/dynamic';
 import { ReactNode, useState } from 'react';
+import dynamic from 'next/dynamic';
+
 const ReactQuill = dynamic(() => import('react-quill'), {
 	ssr: false,
 });
-
-// import ReactQuill from 'react-quill';
-// import { Editor } from 'react-draft-wysiwyg';
 
 import 'react-quill/dist/quill.snow.css';
 interface Props {
@@ -15,51 +13,20 @@ interface Props {
 
 const RichTextEditor = ({ handleTextEditor }: Props) => {
 	const [value, setValue] = useState('');
-	// const [editorState, setEditorState] = useState(() =>
-	// 	EditorState.createEmpty()
-	// );
 
-	// const toolbarOptions = {
-	// 	options: ['inline', 'list', 'textAlign', 'link'],
-	// 	inline: {
-	// 		inDropdown: false,
-	// 		options: ['bold', 'italic', 'underline'],
-	// 	},
-	// 	list: {
-	// 		inDropdown: false,
-	// 		options: ['unordered', 'ordered'],
-	// 	},
-	// 	textAlign: {
-	// 		options: ['left', 'center', 'right'],
-	// 	},
-	// 	link: {
-	// 		showOpenOptionOnHover: true,
-	// 		defaultTargetOption: '_self',
-	// 		options: ['link', 'unlink'],
-	// 	},
-	// };
-
-	// const createMarkup = (html: ReactNode) => {
-	// 	return DOMPurify.sanitize(html);
-	// };
-
-	// useEffect(() => {
-	// 	let html = convertToHTML(editorState.getCurrentContent());
-	// 	handleTextEditor(createMarkup(html));
-	// }, [editorState]);
-
-	// const handleEditorStateChange = (editorState) => {
-	// 	setEditorState(editorState);
-	// };
+	const handleChangeValue = (payload: string) => {
+		setValue(payload);
+		handleTextEditor(payload);
+	};
 
 	const toolbarOptions = [
-		['bold', 'italic', 'underline', 'strike'], // toggled buttons
+		['bold', 'italic', 'underline', 'strike'],
 		['blockquote', 'code-block'],
 
 		[{ list: 'ordered' }, { list: 'bullet' }],
-		[{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+		[{ script: 'sub' }, { script: 'super' }],
 
-		[{ size: ['small', false, 'large'] }], // custom dropdown
+		[{ size: ['small', false, 'large'] }],
 
 		[{ align: [] }],
 	];
@@ -68,7 +35,7 @@ const RichTextEditor = ({ handleTextEditor }: Props) => {
 		<ReactQuill
 			theme="snow"
 			value={value}
-			onChange={setValue}
+			onChange={(payload) => handleChangeValue(payload)}
 			modules={{
 				toolbar: toolbarOptions,
 			}}

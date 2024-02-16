@@ -54,6 +54,10 @@ const page = () => {
 		setConvertedContent(payload);
 	};
 
+	const handleCancel = () => {
+		router.back();
+	};
+
 	const onSubmit = (values: z.infer<typeof formSchema>) => {
 		const {
 			expJobTitle,
@@ -75,10 +79,7 @@ const page = () => {
 			endYears,
 			expSummary: convertedContent,
 		});
-	};
-
-	const handleCancel = () => {
-		router.back();
+		handleCancel();
 	};
 
 	return (

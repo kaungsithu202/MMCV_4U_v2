@@ -5,7 +5,6 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 type State = {
 	profileDetail: {
 		fullName: string;
-		profileImg: string;
 		jobTitle: string;
 		email: string;
 		phone: string;
@@ -14,11 +13,14 @@ type State = {
 		passport: string | undefined;
 		martial: string | undefined;
 		gender: string | undefined;
+		github: string | undefined;
+		linkedin: string | undefined;
 		days: string | undefined;
 		months: string | undefined;
 		years: string | undefined;
 		dateOfBirth: string | undefined;
 	};
+	profileImg: string;
 	openedPersonalInformationFields: number[];
 	profileSummary: ReactNode | '';
 	experience: {
@@ -55,6 +57,7 @@ type Action = {
 	setExperience: (payload: State['experience']) => void;
 	setSkills: (payload: State['skills']) => void;
 	setProjects: (payload: State['projects']) => void;
+	setProfileImage: (payload: State['profileImg']) => void;
 };
 
 const useCVStore = create<State & Action>()(
@@ -71,11 +74,14 @@ const useCVStore = create<State & Action>()(
 				passport: '',
 				martial: '',
 				gender: '',
+				github: '',
+				linkedin: '',
 				days: '',
 				months: '',
 				years: '',
 				dateOfBirth: '',
 			},
+			profileImg: '',
 			openedPersonalInformationFields: [],
 			profileSummary: '',
 			experience: {
@@ -121,11 +127,19 @@ const useCVStore = create<State & Action>()(
 				set((state) => ({
 					projects: { ...state.projects, ...payload },
 				})),
+			setProfileImage: (payload) =>
+				set(() => ({
+					profileImg: payload,
+				})),
 		}),
 
 		{
 			name: 'cv-storage',
 			storage: createJSONStorage(() => sessionStorage),
+			partialize: (state) =>
+				Object.fromEntries(
+					Object.entries(state).filter(([key]) => !['profileImg'].includes(key))
+				),
 		}
 	)
 );

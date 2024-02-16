@@ -64,6 +64,7 @@ const Projects = () => {
 			endYears,
 			projectSummary: convertedContent,
 		});
+		handleCancel();
 	};
 
 	const handleCancel = () => {

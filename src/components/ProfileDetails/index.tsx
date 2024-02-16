@@ -6,7 +6,6 @@ import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { convertFileToBase64 } from '@/lib/utils';
 import useCVStore from '@/store/useCVStore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -45,11 +44,21 @@ const personalInformationFields: IPersonalInformation[] = [
 		name: 'Gender',
 		fieldName: 'gender',
 	},
+	{
+		id: 6,
+		name: 'Github',
+		fieldName: 'github',
+	},
+	{
+		id: 7,
+		name: 'Linkedin',
+		fieldName: 'linkedin',
+	},
 ];
 
 const baseSchema = {
-	fullName: z.string(),
-	jobTitle: z.string(),
+	fullName: z.string().min(1, 'your name is required!'),
+	jobTitle: z.string().min(1, 'job title is required!'),
 	profileImg: z
 		.any()
 		.refine((files) => files?.length !== 1, 'Image is required.'),
@@ -76,6 +85,8 @@ const baseSchema = {
 	passport: z.string().optional(),
 	martial: z.string().optional(),
 	gender: z.string().optional(),
+	github: z.string().optional(),
+	linkedin: z.string().optional(),
 	days: z.string().optional(),
 	months: z.string().optional(),
 	years: z.string().optional(),
@@ -121,26 +132,27 @@ const ProfileDetail = () => {
 			passport: '',
 			martial: '',
 			gender: '',
+			github: '',
+			linkedin: '',
 			days: '',
 			months: '',
 			years: '',
 		},
 	});
 
-	const dynamicAddFieldButtons = personalInformationFields
+	const dynamicAddFieldBtns = personalInformationFields
 		.map((field) => field)
 		.filter((field) => !currentOpenFields.includes(field.id));
-	console.log('dynamicAddFieldButtons', dynamicAddFieldButtons);
 
 	useEffect(() => {
 		const storedProfileDetail = sessionStorage.getItem('cv-storage');
+
 		if (storedProfileDetail) {
 			const data = JSON.parse(storedProfileDetail);
 			let storedData = data?.state?.profileDetail;
 			const properties = [
 				'fullName',
 				'jobTitle',
-				'profileImg',
 				'email',
 				'phone',
 				'address',
@@ -148,6 +160,8 @@ const ProfileDetail = () => {
 				'passport',
 				'martial',
 				'gender',
+				'github',
+				'linkedin',
 				'days',
 				'months',
 				'years',
@@ -158,22 +172,6 @@ const ProfileDetail = () => {
 			setCurrentOpenFields(openedPersonalInformationFields);
 		}
 	}, [form.setValue, openedPersonalInformationFields]);
-
-	const profileImgValue = form.getValues('profileImg');
-
-	useEffect(() => {
-		if (profileImgValue?.length === 0 || typeof profileImgValue === 'string')
-			return;
-		const convertProfileImageToBase64 = async () => {
-			const base64Img = await convertFileToBase64(profileImgValue);
-			console.log(base64Img);
-			setProfileDetail({
-				...profileDetail,
-				profileImg: base64Img as string,
-			});
-		};
-		convertProfileImageToBase64();
-	}, [profileImgValue]);
 
 	const handleCurrentOpenFields = (payload: number[]) => {
 		setCurrentOpenFields(payload);
@@ -198,6 +196,8 @@ const ProfileDetail = () => {
 			passport,
 			martial,
 			gender,
+			github,
+			linkedin,
 		} = values;
 
 		const dateOfBirth = `${days} ${months} ${years}`;
@@ -214,6 +214,8 @@ const ProfileDetail = () => {
 			passport,
 			martial,
 			gender,
+			github,
+			linkedin,
 			days,
 			months,
 			years,
@@ -234,13 +236,13 @@ const ProfileDetail = () => {
 				<form onSubmit={form.handleSubmit(onSubmit)}>
 					<ProfileDetailsForm
 						control={form.control}
-						profileImage={profileDetail?.profileImg}
+						// profileImage={profileDetail?.profileImg}
 					/>
 					<PersonalInformationForm
 						personalInformationFields={personalInformationFields}
 						currentOpenFields={currentOpenFields}
 						control={form.control}
-						dynamicAddFieldButtons={dynamicAddFieldButtons}
+						dynamicAddFieldBtns={dynamicAddFieldBtns}
 						onCurrentOpenFields={handleCurrentOpenFields}
 						OnCloseCurrentOpenFields={handleOnCloseCurrentOpenFields}
 					/>

@@ -12,7 +12,12 @@ import { useRouter } from 'next/navigation';
 
 const ProfileAccordion = () => {
 	const router = useRouter();
+
 	const profileSummary = useStore(useCVStore, (state) => state.profileSummary);
+
+	if (String(profileSummary)?.length === 0) {
+		return null;
+	}
 
 	const handleProfileSummary = () => {
 		router.push(EDIT_PROFILE_SUMMARY);

@@ -26,7 +26,7 @@ interface Props {
 	personalInformationFields: IPersonalInformation[];
 	currentOpenFields: number[];
 	control: Control<any>;
-	dynamicAddFieldButtons: IPersonalInformation[];
+	dynamicAddFieldBtns: IPersonalInformation[];
 	onCurrentOpenFields: (payload: number | number[]) => void;
 	OnCloseCurrentOpenFields: (payload: number) => void;
 }
@@ -35,7 +35,7 @@ const PersonalInformationForm = ({
 	personalInformationFields,
 	currentOpenFields,
 	control,
-	dynamicAddFieldButtons,
+	dynamicAddFieldBtns,
 	onCurrentOpenFields,
 	OnCloseCurrentOpenFields,
 }: Props) => {
@@ -150,7 +150,7 @@ const PersonalInformationForm = ({
 						)}
 					</>
 				))}
-				{dynamicAddFieldButtons.map((info) => (
+				{dynamicAddFieldBtns?.map((info) => (
 					<>
 						<AddFieldButton
 							key={info.id}

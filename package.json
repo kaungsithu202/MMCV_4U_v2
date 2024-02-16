@@ -35,6 +35,7 @@
     "react-component-export-image": "^1.0.6",
     "react-dom": "^18",
     "react-draft-wysiwyg": "^1.15.0",
+    "react-easy-crop": "^5.0.4",
     "react-hook-form": "^7.47.0",
     "react-html-parser": "^2.0.2",
     "react-quill": "^2.0.0",

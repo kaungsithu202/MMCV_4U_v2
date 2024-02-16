@@ -1,24 +1,29 @@
 'use client';
-import profileAnimation from '@/assets/profileAnimation.json';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
+
 import IconAddress from '@/components/icons/IconAddress';
 import IconEdit from '@/components/icons/IconEdit';
 import IconEmail from '@/components/icons/IconEmail';
 import IconPhone from '@/components/icons/IconPhone';
+
+import profileAnimation from '@/assets/profileAnimation.json';
+
 import { PROFILE_DETAIL_URL } from '@/constants/routes';
-import useStore from '@/hooks/useStore';
+
 import { cn } from '@/lib/utils';
+
+import useStore from '@/hooks/useStore';
 import useCVStore from '@/store/useCVStore';
-import Lottie from 'lottie-react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 const ProfileDetailInfo = () => {
 	const profileDetail = useStore(useCVStore, (state) => state.profileDetail);
+	const profileImg = useStore(useCVStore, (state) => state.profileImg);
 
 	if (!profileDetail) return;
 
-	const { fullName, profileImg, jobTitle, email, phone, address } =
-		profileDetail;
+	const { fullName, jobTitle, email, phone, address } = profileDetail;
 
 	const router = useRouter();
 
@@ -64,6 +69,7 @@ const ProfileDetailInfo = () => {
 					</p>
 				</div>
 			</div>
+
 			<div className="flex flex-col justify-center items-center">
 				<button className="icon-btn">
 					<IconEdit className="text-white icon-size" />

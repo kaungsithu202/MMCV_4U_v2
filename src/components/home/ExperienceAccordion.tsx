@@ -3,15 +3,26 @@ import { useRouter } from 'next/navigation';
 
 import CustomAccordion from '../common/CustomAccordion';
 
+import useCVStore from '@/store/useCVStore';
+import { useStore } from 'zustand';
 import IconEye from '../icons/IconEye';
 import IconProfile from '../icons/IconProfile';
 
 const ExperienceAccordion = () => {
+	const experience = useStore(useCVStore, (state) => state.experience);
+
 	const router = useRouter();
 
 	const handleExperience = () => {
 		router.push('/experience');
 	};
+
+	if (experience.expJobTitle.length === 0) {
+		return null;
+	}
+
+	console.log('experience', experience.expJobTitle);
+
 	return (
 		<CustomAccordion
 			triggerSection={
@@ -25,7 +36,7 @@ const ExperienceAccordion = () => {
 					onClick={handleExperience}
 					className="flex items-center justify-between"
 				>
-					{/* <p className="text-md font-medium">{parsedProfileSummary}</p> */}
+					<p className="text-base font-medium">{experience?.expJobTitle}</p>
 					<IconEye />
 				</div>
 			}

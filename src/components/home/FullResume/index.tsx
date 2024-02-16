@@ -2,7 +2,6 @@
 import parse from 'html-react-parser';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { RefObject, forwardRef } from 'react';
 
 import IconCalendar from '@/components/icons/IconCalendar';
@@ -16,16 +15,19 @@ import IconUser from '@/components/icons/IconUser';
 
 import useStore from '@/hooks/useStore';
 import useCVStore from '@/store/useCVStore';
-import useQueryParams from '@/hooks/useQueryParams';
+import IconGithub from '@/components/icons/IconGithub';
+
 const FullResume = forwardRef((props, ref) => {
 	const profileDetail = useStore(useCVStore, (state) => state.profileDetail);
 	const profileSummary = useStore(useCVStore, (state) => state.profileSummary);
+	const profileImg = useStore(useCVStore, (state) => state.profileImg);
 	const exp = useStore(useCVStore, (state) => state.experience);
 	const skills = useStore(useCVStore, (state) => state.skills);
 	const projects = useStore(useCVStore, (state) => state.projects);
 
-	const parsedProfileSummary = parse(String(profileSummary));
-	console.log('sss', exp?.expSummary);
+	const parsedProfileSummary: any = parse(String(profileSummary));
+
+	console.log('profileDetail', profileDetail?.github);
 	return (
 		<div
 			ref={ref as RefObject<HTMLDivElement>}
@@ -34,10 +36,10 @@ const FullResume = forwardRef((props, ref) => {
 			<div className="bg-[#672d50] p-6 items-center text-white col-span-2 ">
 				<h1 className="text-2xl font-semibold ">{profileDetail?.fullName}</h1>
 				<h2 className="text-base ">{profileDetail?.jobTitle}</h2>
-				{profileDetail?.profileImg && (
+				{profileImg && (
 					<Image
-						src={profileDetail.profileImg}
-						alt={`${profileDetail.fullName}'s photo`}
+						src={profileImg}
+						alt={`${profileDetail?.fullName}'s photo`}
 						width={80}
 						height={80}
 						className="w-28 h-28 object-cover rounded-full my-3"
@@ -88,6 +90,18 @@ const FullResume = forwardRef((props, ref) => {
 							<p>{profileDetail.dateOfBirth}</p>
 						</div>
 					)}
+					{profileDetail?.github && (
+						<div className="text-xxs flex items-center gap-2">
+							<IconGithub className="text-white w-3 h-auto" />
+							<p>{profileDetail.github}</p>
+						</div>
+					)}
+					{profileDetail?.linkedin && (
+						<div className="text-xxs flex items-center gap-2">
+							<IconGithub className="text-white w-3 h-auto" />
+							<p>{profileDetail.linkedin}</p>
+						</div>
+					)}
 					{profileDetail?.passport && (
 						<div className="text-xxs flex items-center gap-2">
 							<IconId className="text-white w-3 h-auto" />
@@ -101,7 +115,7 @@ const FullResume = forwardRef((props, ref) => {
 						</div>
 					)}
 				</div>
-				{parsedProfileSummary !== '' && (
+				{String(profileSummary)?.length !== 0 && (
 					<section className="my-3">
 						<h2 className="text-xs font-bold uppercase">Profile</h2>
 						<p className="text-xxs mt-1">{parsedProfileSummary}</p>
@@ -109,9 +123,14 @@ const FullResume = forwardRef((props, ref) => {
 				)}
 				{skills?.length !== 0 && (
 					<div>
-						<h2 className="text-xs font-bold uppercase">Skills</h2>
+						<h2 className="text-xs font-bold uppercase mt-3">Skills</h2>
 						{skills?.map?.((s) => (
-							<p className="text-xxs mt-1">{s.skill}</p>
+							<>
+								<p className="text-sm mt-1 underline underline-offset-2">
+									{s.skill}
+								</p>
+								<li className="text-xxs mt-1">{s.subSkills}</li>
+							</>
 						))}
 					</div>
 				)}
@@ -134,7 +153,9 @@ const FullResume = forwardRef((props, ref) => {
 					</div>
 				)}
 				<div>
-					<h3 className="font-bold my-1">PROJECTS</h3>
+					{projects?.projectTitle && (
+						<h3 className="font-bold my-1">PROJECTS</h3>
+					)}
 					<h2 className="text-xs italic  font-semibold">
 						{projects?.projectTitle}
 					</h2>
