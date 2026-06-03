@@ -5,6 +5,7 @@ import ProfileAccordion from '@/components/home/ProfileAccordion';
 import ProjectAccordion from '@/components/home/ProjectAccordion';
 import SkillsAccordion from '@/components/home/SkillsAccordion';
 import ContentDialogSection from '@/components/home/ContentDialogSection';
+import EmptyState from '@/components/home/EmptyState';
 
 const ProfileDetail = dynamic(
 	() => import('@/components/home/ProfileDetailSection/ProfileDetailInfo')
@@ -18,6 +19,7 @@ export default function Home() {
 			<SkillsAccordion />
 			<ExperienceAccordion />
 			<ProjectAccordion />
+			<EmptyState />
 			<ContentDialogSection />
 		</section>
 	);

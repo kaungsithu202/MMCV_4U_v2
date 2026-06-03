@@ -39,7 +39,7 @@ const ProfileSummaryEditor = () => {
 				<h2 className="card-header">Edit Profile</h2>
 				<div className="flex items-start">
 					<p className="font-medium">Text</p>
-					<div className="w-1 h-1 bg-red-500 rounded-full mt-3 ml-1" />
+					<div className="w-1 h-1 bg-terracotta rounded-full mt-3 ml-1" />
 				</div>
 
 				<RichTextEditor handleTextEditor={handleTextEditor} />

@@ -25,7 +25,7 @@ const ActionBtns = ({
 	return (
 		<div
 			className={cn(
-				'bg-white round py-5 px-10  leading-10 cursor-pointer drop-shadow-md flex item-center justify-end',
+				'bg-paper border border-clay/40 round py-5 px-10 leading-10 cursor-pointer shadow-sm flex item-center justify-end',
 				styleClass,
 				{
 					'justify-between': isShowDelete,
@@ -34,7 +34,7 @@ const ActionBtns = ({
 		>
 			{isShowDelete && (
 				<Button variant="outline" size="lg" type="button" onClick={onDelete}>
-					<IconTrash className="text-gray-600 mr-3 w-5 h-auto" />
+					<IconTrash className="text-[var(--danger)] mr-3 w-5 h-auto" />
 					Delete
 				</Button>
 			)}

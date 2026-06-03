@@ -2,7 +2,30 @@ import { ReactNode } from 'react';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+export type ExperienceEntry = {
+	id: string;
+	expJobTitle: string;
+	expCity: string;
+	expCountry: string;
+	startMonths: string;
+	startYears: string;
+	endMonths: string;
+	endYears: string;
+	expSummary: ReactNode | '';
+};
+
+export type ProjectEntry = {
+	id: string;
+	projectTitle: string;
+	startMonths: string;
+	startYears: string;
+	endMonths: string;
+	endYears: string;
+	projectSummary: ReactNode | '';
+};
+
 type State = {
+	resumeTitle: string;
 	profileDetail: {
 		fullName: string;
 		jobTitle: string;
@@ -23,46 +46,36 @@ type State = {
 	profileImg: string;
 	openedPersonalInformationFields: number[];
 	profileSummary: ReactNode | '';
-	experience: {
-		expJobTitle: string;
-		expCity: string;
-		expCountry: string;
-		startMonths: string;
-		startYears: string;
-		endMonths: string;
-		endYears: string;
-		expSummary: ReactNode | '';
-	};
+	experience: ExperienceEntry[];
 	skills: {
 		id: string;
 		skill: string;
 		subSkills: string | undefined;
 	}[];
-	projects: {
-		projectTitle: string;
-		startMonths: string | '';
-		startYears: string | '';
-		endMonths: string | '';
-		endYears: string | '';
-		projectSummary: ReactNode | '';
-	};
+	projects: ProjectEntry[];
 };
 
 type Action = {
+	setResumeTitle: (payload: string) => void;
 	setProfileDetail: (payload: State['profileDetail']) => void;
 	setOpenedPersonalInformationFields: (
 		payload: State['openedPersonalInformationFields']
 	) => void;
 	setProfileSummary: (payload: State['profileSummary']) => void;
-	setExperience: (payload: State['experience']) => void;
+	addExperience: (payload: ExperienceEntry) => void;
+	updateExperience: (id: string, payload: Omit<ExperienceEntry, 'id'>) => void;
+	deleteExperience: (id: string) => void;
 	setSkills: (payload: State['skills']) => void;
-	setProjects: (payload: State['projects']) => void;
+	addProject: (payload: ProjectEntry) => void;
+	updateProject: (id: string, payload: Omit<ProjectEntry, 'id'>) => void;
+	deleteProject: (id: string) => void;
 	setProfileImage: (payload: State['profileImg']) => void;
 };
 
 const useCVStore = create<State & Action>()(
 	persist(
 		(set, get) => ({
+			resumeTitle: 'Your Resume Title',
 			profileDetail: {
 				fullName: '',
 				profileImg: '',
@@ -84,25 +97,13 @@ const useCVStore = create<State & Action>()(
 			profileImg: '',
 			openedPersonalInformationFields: [],
 			profileSummary: '',
-			experience: {
-				expJobTitle: '',
-				expCity: '',
-				expCountry: '',
-				startMonths: '',
-				startYears: '',
-				endMonths: '',
-				endYears: '',
-				expSummary: '',
-			},
+			experience: [],
 			skills: [],
-			projects: {
-				projectTitle: '',
-				startMonths: '',
-				startYears: '',
-				endMonths: '',
-				endYears: '',
-				projectSummary: '',
-			},
+			projects: [],
+			setResumeTitle: (payload) =>
+				set(() => ({
+					resumeTitle: payload,
+				})),
 			setProfileDetail: (payload) =>
 				set((state) => ({
 					profileDetail: { ...state.profileDetail, ...payload },
@@ -115,17 +116,37 @@ const useCVStore = create<State & Action>()(
 				set(() => ({
 					profileSummary: payload,
 				})),
-			setExperience: (payload) =>
+			addExperience: (payload) =>
 				set((state) => ({
-					experience: { ...state.experience, ...payload },
+					experience: [...state.experience, payload],
+				})),
+			updateExperience: (id, payload) =>
+				set((state) => ({
+					experience: state.experience.map((exp) =>
+						exp.id === id ? { ...exp, ...payload } : exp
+					),
+				})),
+			deleteExperience: (id) =>
+				set((state) => ({
+					experience: state.experience.filter((exp) => exp.id !== id),
 				})),
 			setSkills: (payload) =>
 				set((state) => ({
 					skills: payload,
 				})),
-			setProjects: (payload) =>
+			addProject: (payload) =>
 				set((state) => ({
-					projects: { ...state.projects, ...payload },
+					projects: [...state.projects, payload],
+				})),
+			updateProject: (id, payload) =>
+				set((state) => ({
+					projects: state.projects.map((proj) =>
+						proj.id === id ? { ...proj, ...payload } : proj
+					),
+				})),
+			deleteProject: (id) =>
+				set((state) => ({
+					projects: state.projects.filter((proj) => proj.id !== id),
 				})),
 			setProfileImage: (payload) =>
 				set(() => ({
@@ -135,11 +156,7 @@ const useCVStore = create<State & Action>()(
 
 		{
 			name: 'cv-storage',
-			storage: createJSONStorage(() => sessionStorage),
-			partialize: (state) =>
-				Object.fromEntries(
-					Object.entries(state).filter(([key]) => !['profileImg'].includes(key))
-				),
+			storage: createJSONStorage(() => localStorage),
 		}
 	)
 );

@@ -4,10 +4,13 @@ import { useState } from 'react';
 import IconEdit from '../icons/IconEdit';
 import IfElse from '../common/IfElse';
 import IconCheck from '../icons/IconCheck';
+import useCVStore from '@/store/useCVStore';
+import { useStore } from 'zustand';
 
 const EditableTitle = () => {
 	const [isEdit, setIsEdit] = useState(false);
-	const [title, setTitle] = useState('Your Resume Title');
+	const resumeTitle = useStore(useCVStore, (state) => state.resumeTitle);
+	const setResumeTitle = useCVStore((state) => state.setResumeTitle);
 
 	return (
 		<div className="">
@@ -16,10 +19,10 @@ const EditableTitle = () => {
 				ifBlock={
 					<div className="flex-center-3 ">
 						<input
-							className="outline-none ring-1 px-3 py-3 round ring-gray-300"
-							value={title}
+							className="outline-none ring-1 px-3 py-3 round bg-secondary/50 text-ink ring-clay focus:ring-terracotta"
+							value={resumeTitle}
 							onChange={(e) => {
-								setTitle(e.target.value);
+								setResumeTitle(e.target.value);
 							}}
 						/>
 						<button
@@ -28,7 +31,7 @@ const EditableTitle = () => {
 							}}
 							className="icon-btn"
 						>
-							<IconCheck className="text-white " />
+							<IconCheck className="text-paper" />
 						</button>
 					</div>
 				}
@@ -37,9 +40,9 @@ const EditableTitle = () => {
 						onClick={() => setIsEdit(true)}
 						className="flex-center-3 group  cursor-pointer"
 					>
-						<p className="card-header group-hover:text-black/80">{title}</p>
+						<p className="card-header group-hover:text-plum">{resumeTitle}</p>
 						<IconEdit
-							className="icon-size group-hover:text-black/60"
+							className="icon-size text-muted group-hover:text-terracotta"
 							role="button"
 						/>
 					</div>

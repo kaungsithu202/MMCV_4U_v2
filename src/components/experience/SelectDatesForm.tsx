@@ -33,13 +33,13 @@ const SelectDatesForm = ({ control, label, monthsName, yearsName }: Props) => {
 								<SelectTrigger className="p-5">
 									<SelectValue placeholder="Month" />
 								</SelectTrigger>
-								<SelectContent className="bg-gray-50 rounded-md">
+								<SelectContent className="bg-paper rounded-md border-clay/60">
 									<div className="grid grid-cols-3 grid-rows-4 gap-2 p-1 ">
 										{getMonths().map((month) => (
 											<SelectItem
 												value={month}
 												key={month}
-												className="px-6 py-3 border bg-white "
+											className="px-6 py-3 border border-clay/40 bg-secondary/50 text-ink focus:bg-secondary"
 											>
 												{month}
 											</SelectItem>
@@ -58,11 +58,11 @@ const SelectDatesForm = ({ control, label, monthsName, yearsName }: Props) => {
 								<SelectTrigger className="p-5">
 									<SelectValue placeholder="Year" />
 								</SelectTrigger>
-								<SelectContent className="bg-gray-50 rounded-md">
+								<SelectContent className="bg-paper rounded-md border-clay/60">
 									<div className="grid grid-cols-4 gap-2 p-1 ">
 										{get100Years.map((year) => (
 											<SelectItem
-												className="px-6 py-3 border bg-white "
+										className="px-6 py-3 border border-clay/40 bg-secondary/50 text-ink focus:bg-secondary"
 												value={year.toString()}
 											>
 												{year}

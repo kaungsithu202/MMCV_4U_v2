@@ -17,8 +17,8 @@ const AddFieldButton = ({ name, id, onClick, isOpenField }: Props) => {
 				className="rounded-xl mt-1"
 				onClick={() => onClick([...new Set([...isOpenField, id])])}
 			>
-				<IconPlus className="mr-2 text-gray-400" />
-				<span className="text-gray-400">{name}</span>
+				<IconPlus className="mr-2 text-terracotta" />
+				<span className="text-muted">{name}</span>
 			</Button>
 		</>
 	);

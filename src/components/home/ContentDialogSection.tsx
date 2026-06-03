@@ -29,9 +29,9 @@ const ContentDialogSection = () => {
 						<IconPlus className="mr-3" /> Add Content
 					</Button>
 				</DialogTrigger>
-				<DialogContent className="h-[80vh] ">
+				<DialogContent className="h-[80vh] bg-paper border-clay/50 text-ink">
 					<DialogHeader>
-						<DialogTitle className="mb-6 text-3xl font-bold">
+						<DialogTitle className="mb-6 text-3xl font-bold text-ink">
 							Add Content
 						</DialogTitle>
 						<DialogDescription className="grid grid-cols-4 gap-5">

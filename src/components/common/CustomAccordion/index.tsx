@@ -16,7 +16,7 @@ const CustomAccordion = ({ triggerSection, contentSection }: Props) => {
 		<Accordion
 			type="single"
 			collapsible
-			className=" bg-white round py-3 px-10  leading-10 cursor-pointer drop-shadow-md"
+			className="bg-paper border border-clay/40 round py-3 px-10 leading-10 cursor-pointer shadow-sm"
 		>
 			<AccordionItem value="item-1">
 				<AccordionTrigger>{triggerSection}</AccordionTrigger>

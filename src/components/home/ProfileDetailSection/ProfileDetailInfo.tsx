@@ -36,7 +36,7 @@ const ProfileDetailInfo = () => {
 	};
 
 	const dynamicColor = (state: string) => {
-		return state?.trim().length === 0 ? 'text-color-placeholder' : 'text-black';
+		return state?.trim().length === 0 ? 'text-muted/65' : 'text-ink';
 	};
 	return (
 		<div
@@ -48,7 +48,7 @@ const ProfileDetailInfo = () => {
 					{isEmptyField(fullName, 'Your Name')}
 				</p>
 				{jobTitle && (
-					<p className="text-lg font-medium text-gray-400">{jobTitle}</p>
+					<p className="text-lg font-medium text-muted">{jobTitle}</p>
 				)}
 				<div className="flex items-center gap-2">
 					<IconEmail className={cn('icon-size', dynamicColor(email))} />
@@ -72,7 +72,7 @@ const ProfileDetailInfo = () => {
 
 			<div className="flex flex-col justify-center items-center">
 				<button className="icon-btn">
-					<IconEdit className="text-white icon-size" />
+					<IconEdit className="text-paper icon-size" />
 				</button>
 				{profileImg ? (
 					<Image

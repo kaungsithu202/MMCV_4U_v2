@@ -34,8 +34,8 @@ const SkillsAccordion = () => {
 	return (
 		<CustomAccordion
 			triggerSection={
-				<div className="flex items-center justify-start gap-6 ">
-					<IconSkill />
+				<div className="flex items-center justify-start gap-6 text-ink">
+					<IconSkill className="text-terracotta" />
 					<p className="card-header">Skills</p>
 				</div>
 			}
@@ -50,17 +50,19 @@ const SkillsAccordion = () => {
 						{skills.map((s) => (
 							<Reorder.Item
 								key={s.id}
-								className="flex items-center justify-between gap-3 py-3 px-3 rounded-md my-1 bg-violet-50 hover:bg-violet-100"
+								className="flex items-center justify-between gap-3 py-3 px-3 rounded-xl my-1 bg-secondary/50 hover:bg-secondary border border-clay/30"
 								value={s}
 							>
 								<div className="flex items-center justify-start gap-3">
-									<IconOrder />{' '}
+									<IconOrder className="text-muted" />{' '}
 									<p className="text-base font-semibold">{s.skill}</p>
 								</div>
-								<IconEditCircle
-									className="w-5 h-auto"
+								<button
 									onClick={() => handleEditSkill(s.id)}
-								/>
+									aria-label={`Edit ${s.skill}`}
+								>
+									<IconEditCircle className="w-5 h-auto text-plum" />
+								</button>
 							</Reorder.Item>
 						))}
 					</Reorder.Group>
@@ -68,7 +70,7 @@ const SkillsAccordion = () => {
 					<div className="flex items-center justify-center mt-3">
 						<Button
 							variant="outline"
-							className="rounded-3xl border-gray-200 border-4 "
+							className="rounded-3xl border-clay/60 border"
 							size="lg"
 							onClick={handleSkills}
 						>

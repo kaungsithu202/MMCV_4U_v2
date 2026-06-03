@@ -7,54 +7,83 @@ import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import useCVStore from '@/store/useCVStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { ReactNode, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ReactNode, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 import { useStore } from 'zustand';
 
-const page = () => {
+const Experience = () => {
 	const [convertedContent, setConvertedContent] = useState<ReactNode | null>(
-		null
+		''
 	);
 
 	const experience = useStore(useCVStore, (state) => state.experience);
-
-	const setExperience = useStore(useCVStore, (state) => state.setExperience);
+	const addExperience = useStore(useCVStore, (state) => state.addExperience);
+	const updateExperience = useStore(useCVStore, (state) => state.updateExperience);
+	const deleteExperience = useStore(useCVStore, (state) => state.deleteExperience);
 
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const queryId = searchParams.get('q');
+
+	const editEntry = experience.find((exp) => exp.id === queryId);
 
 	const formSchema = z.object({
-		expJobTitle: z.string(),
-		expCity: z.string(),
-		expCountry: z.string(),
-		startMonths: z.string(),
-		startYears: z.string(),
-		endMonths: z.string(),
-		endYears: z.string(),
+		expJobTitle: z.string().min(1, 'Job title is required'),
+		expCity: z.string().min(1, 'City is required'),
+		expCountry: z.string().min(1, 'Country is required'),
+		startMonths: z.string().min(1, 'Start month is required'),
+		startYears: z.string().min(1, 'Start year is required'),
+		endMonths: z.string().min(1, 'End month is required'),
+		endYears: z.string().min(1, 'End year is required'),
 	});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		// mode: 'onChange',
-		defaultValues: {
-			expJobTitle: '',
-			expCity: '',
-			expCountry: '',
-			startMonths: '',
-			startYears: '',
-			endMonths: '',
-			endYears: '',
-		},
+		mode: 'onChange',
 	});
 
-	const { control, handleSubmit } = form;
+	const { control, handleSubmit, setValue } = form;
+
+	useEffect(() => {
+		if (queryId && editEntry) {
+			setValue('expJobTitle', editEntry.expJobTitle);
+			setValue('expCity', editEntry.expCity);
+			setValue('expCountry', editEntry.expCountry);
+			setValue('startMonths', editEntry.startMonths);
+			setValue('startYears', editEntry.startYears);
+			setValue('endMonths', editEntry.endMonths);
+			setValue('endYears', editEntry.endYears);
+			setConvertedContent(editEntry.expSummary as ReactNode);
+		}
+	}, [queryId, editEntry]);
 
 	const handleTextEditor = (payload: ReactNode) => {
 		setConvertedContent(payload);
 	};
 
 	const handleCancel = () => {
+		router.back();
+	};
+
+	const handleDelete = () => {
+		if (queryId) {
+			const deletedEntry = experience.find((exp) => exp.id === queryId);
+			deleteExperience(queryId);
+			toast.success(`Deleted "${deletedEntry?.expJobTitle}"`, {
+				action: {
+					label: 'Undo',
+					onClick: () => {
+						if (deletedEntry) {
+							addExperience(deletedEntry);
+						}
+					},
+				},
+			});
+		}
 		router.back();
 	};
 
@@ -68,17 +97,31 @@ const page = () => {
 			endMonths,
 			endYears,
 		} = values;
-		setExperience({
-			...experience,
-			expJobTitle,
-			expCity,
-			expCountry,
-			startMonths,
-			startYears,
-			endMonths,
-			endYears,
-			expSummary: convertedContent,
-		});
+
+		if (queryId) {
+			updateExperience(queryId, {
+				expJobTitle,
+				expCity,
+				expCountry,
+				startMonths,
+				startYears,
+				endMonths,
+				endYears,
+				expSummary: convertedContent,
+			});
+		} else {
+			addExperience({
+				id: uuidv4(),
+				expJobTitle,
+				expCity,
+				expCountry,
+				startMonths,
+				startYears,
+				endMonths,
+				endYears,
+				expSummary: convertedContent,
+			});
+		}
 		handleCancel();
 	};
 
@@ -90,7 +133,9 @@ const page = () => {
 					className="max-h-screen overflow-scroll no-scrollbar"
 				>
 					<section className="card-layout">
-						<h2 className="card-header">Edit Professional Experience</h2>
+						<h2 className="card-header">
+							{queryId ? 'Edit' : 'Add'} Professional Experience
+						</h2>
 						<DefaultForm
 							control={control}
 							name="expJobTitle"
@@ -128,15 +173,22 @@ const page = () => {
 						</div>
 						<div className="mt-2">
 							<Label>Description</Label>
-							<RichTextEditor handleTextEditor={handleTextEditor} />
+							<RichTextEditor
+								handleTextEditor={handleTextEditor}
+								defaultValue={editEntry?.expSummary as string}
+							/>
 						</div>
 					</section>
-					<ActionBtns onCancel={handleCancel} styleClass="mt-3" />
-					{/* <Button type="submit">Click</Button> */}
+					<ActionBtns
+						onCancel={handleCancel}
+						styleClass="mt-3"
+						onDelete={handleDelete}
+						isShowDelete={Boolean(queryId)}
+					/>
 				</form>
 			</Form>
 		</>
 	);
 };
 
-export default page;
+export default Experience;

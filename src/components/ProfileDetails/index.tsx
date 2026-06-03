@@ -145,7 +145,7 @@ const ProfileDetail = () => {
 		.filter((field) => !currentOpenFields.includes(field.id));
 
 	useEffect(() => {
-		const storedProfileDetail = sessionStorage.getItem('cv-storage');
+		const storedProfileDetail = localStorage.getItem('cv-storage');
 
 		if (storedProfileDetail) {
 			const data = JSON.parse(storedProfileDetail);

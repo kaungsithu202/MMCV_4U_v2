@@ -118,9 +118,9 @@ const ProfileDetailsForm = ({ control }: Props) => {
 									role="button"
 									onClick={() => setCropShape('rect')}
 									className={cn(
-										'w-12 h-12 border-[1px] border-gray-400 bg-inherit cursor-pointer',
+									'w-12 h-12 border-[1px] border-clay bg-inherit cursor-pointer',
 										{
-											'bg-blue-300 border-[1px] border-blue-500':
+											'bg-marigold border-[1px] border-terracotta':
 												cropShape === 'rect',
 										}
 									)}
@@ -129,9 +129,9 @@ const ProfileDetailsForm = ({ control }: Props) => {
 									role="button"
 									onClick={() => setCropShape('round')}
 									className={cn(
-										'w-12 h-12  rounded-full border-[1px] border-gray-400 cursor-pointer',
+									'w-12 h-12 rounded-full border-[1px] border-clay cursor-pointer',
 										{
-											'bg-blue-300 border-[1px] border-blue-500':
+											'bg-marigold border-[1px] border-terracotta':
 												cropShape === 'round',
 										}
 									)}
@@ -147,7 +147,7 @@ const ProfileDetailsForm = ({ control }: Props) => {
 								onChange={(e) => {
 									setZoom(e.target.value);
 								}}
-								className="zoom-range  h-1 bg-blue-500 w-80"
+								className="zoom-range h-1 bg-terracotta w-80"
 							/>
 							<Button onClick={showCroppedImage}>Save</Button>
 						</div>
@@ -159,7 +159,7 @@ const ProfileDetailsForm = ({ control }: Props) => {
 				control={control}
 				name="profileImg"
 				render={({ field: { onChange } }) => (
-					<FormItem className="w-32 h-32 bg-gray-200 rounded-full relative">
+					<FormItem className="w-32 h-32 bg-secondary rounded-full relative border border-clay/50">
 						{cropResultImage && (
 							<Image
 								src={cropResultImage}

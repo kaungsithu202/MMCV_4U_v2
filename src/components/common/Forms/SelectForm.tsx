@@ -27,7 +27,7 @@ const SelectForm = ({ control, name, placeholder, selectItems }: Props) => {
 					</SelectTrigger>
 					<SelectContent>
 						{selectItems?.map((item) => (
-							<SelectItem value={item} className="px-6 py-3 border bg-white ">
+						<SelectItem value={item} className="px-6 py-3 border border-clay/40 bg-paper text-ink">
 								{item}
 							</SelectItem>
 						))}

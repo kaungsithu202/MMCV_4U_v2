@@ -22,7 +22,7 @@ const PdfSection = () => {
 
 	return (
 		<div className="w-full    h-full grid grid-cols-5 pdf-component">
-			<div className="bg-[#672d50] rounded-l-lg p-14  text-white col-span-2">
+			<div className="bg-plum rounded-l-lg p-14 text-paper col-span-2">
 				<h1 className="text-5xl font-semibold ">{profileDetail.fullName}</h1>
 				<h2 className="text-3xl ">{profileDetail.jobTitle}</h2>
 				{profileDetail?.profileImg && (
@@ -40,7 +40,7 @@ const PdfSection = () => {
 							className="text-base flex items-center gap-2"
 							href={`mailto:${profileDetail?.email}`}
 						>
-							<IconEmail className="text-white w-5 h-auto" />
+							<IconEmail className="text-marigold w-5 h-auto" />
 							{profileDetail.email}
 						</Link>
 					)}
@@ -49,7 +49,7 @@ const PdfSection = () => {
 							className="text-base flex items-center gap-2"
 							href={`tel:+95${+profileDetail?.phone}`}
 						>
-							<IconPhone className="text-white w-5 h-auto" />
+							<IconPhone className="text-marigold w-5 h-auto" />
 							{profileDetail.phone}
 						</Link>
 					)}

@@ -39,7 +39,7 @@ const PdfPreviewSection = () => {
 	};
 	return (
 		<div ref={pdfRef} className="h-full w-full grid grid-cols-5 pdf-component">
-			<div className="bg-[#672d50] p-6 items-center text-white col-span-2 ">
+			<div className="bg-plum p-6 items-center text-paper col-span-2">
 				<h1 className="text-2xl font-semibold ">{profileDetail.fullName}</h1>
 				<h2 className="text-base ">{profileDetail.jobTitle}</h2>
 				{profileDetail?.profileImg && (
@@ -57,7 +57,7 @@ const PdfPreviewSection = () => {
 							className="text-xxs flex items-center gap-2"
 							href={`mailto:${profileDetail?.email}`}
 						>
-							<IconEmail className="text-white w-3 h-auto" />
+							<IconEmail className="text-marigold w-3 h-auto" />
 							{profileDetail.email}
 						</Link>
 					)}
@@ -66,49 +66,49 @@ const PdfPreviewSection = () => {
 							className="text-xxs flex items-center gap-2"
 							href={`tel:+95${+profileDetail?.phone}`}
 						>
-							<IconPhone className="text-white w-3 h-auto" />
+							<IconPhone className="text-marigold w-3 h-auto" />
 							{profileDetail.phone}
 						</Link>
 					)}
 					{profileDetail.address && (
 						<div className="text-xxs flex items-center gap-2">
-							<IconMap className="text-white w-3 h-auto" />
+							<IconMap className="text-marigold w-3 h-auto" />
 							<p>{profileDetail.address}</p>
 						</div>
 					)}
 				</address>
 				{profileDetail.martial && (
 					<div className="text-xxs flex items-center gap-2">
-						<IconHeart className="text-white w-3 h-auto" />
+						<IconHeart className="text-marigold w-3 h-auto" />
 						<p>{profileDetail.martial}</p>
 					</div>
 				)}
 				{profileDetail.gender && (
 					<div className="text-xxs flex items-center gap-2">
-						<IconUser className="text-white w-3 h-auto" />
+						<IconUser className="text-marigold w-3 h-auto" />
 						<p>{profileDetail.gender}</p>
 					</div>
 				)}
 				{profileDetail.dateOfBirth && (
 					<div className="text-xxs flex items-center gap-2">
-						<IconCalendar className="text-white w-3 h-auto" />
+						<IconCalendar className="text-marigold w-3 h-auto" />
 						<p>{profileDetail.dateOfBirth}</p>
 					</div>
 				)}
 				{profileDetail.passport && (
 					<div className="text-xxs flex items-center gap-2">
-						<IconId className="text-white w-3 h-auto" />
+						<IconId className="text-marigold w-3 h-auto" />
 						<p>{profileDetail.passport}</p>
 					</div>
 				)}
 				{profileDetail.nationality && (
 					<div className="text-xxs flex items-center gap-2">
-						<IconFlag className="text-white w-3 h-auto" />
+						<IconFlag className="text-marigold w-3 h-auto" />
 						<p>{profileDetail.nationality}</p>
 					</div>
 				)}
 			</div>
-			<div className="col-span-3 bg-white">
+			<div className="col-span-3 bg-paper text-ink">
 				<button onClick={handleDownloadPdf}>Download</button>
 			</div>
 		</div>

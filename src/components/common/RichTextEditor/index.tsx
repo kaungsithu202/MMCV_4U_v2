@@ -9,10 +9,11 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 import 'react-quill/dist/quill.snow.css';
 interface Props {
 	handleTextEditor: (payload: ReactNode) => void;
+	defaultValue?: string;
 }
 
-const RichTextEditor = ({ handleTextEditor }: Props) => {
-	const [value, setValue] = useState('');
+const RichTextEditor = ({ handleTextEditor, defaultValue }: Props) => {
+	const [value, setValue] = useState(defaultValue || '');
 
 	const handleChangeValue = (payload: string) => {
 		setValue(payload);

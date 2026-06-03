@@ -6,19 +6,27 @@ const config: Config = {
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
-	theme: {
+		theme: {
 		extend: {
 			colors: {
-				primary: '#F5F5F5',
-				secondary: '#F2EAD3',
-				tertiary: '#DFD7BF',
-				quaternary: '#3F2305',
+				primary: 'oklch(96% 0.018 69)',
+				secondary: 'oklch(91% 0.035 62)',
+				tertiary: 'oklch(82% 0.055 55)',
+				quaternary: 'oklch(27% 0.065 344)',
 				'color-placeholder': '#9CA3AF',
-				'gradient-one': '#8E2DE2',
-				'gradient-two': '#4A00E0',
+				paper: 'var(--paper)',
+				canvas: 'var(--canvas)',
+				ink: 'var(--ink)',
+				muted: 'var(--muted)',
+				clay: 'var(--clay)',
+				plum: 'var(--plum)',
+				terracotta: 'var(--terracotta)',
+				marigold: 'var(--marigold)',
+				'gradient-one': 'var(--terracotta)',
+				'gradient-two': 'var(--plum)',
 			},
 			fontSize: {
-				xxs: '10px',
+				xxs: '12px',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

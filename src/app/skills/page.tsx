@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 import { useStore } from 'zustand';
@@ -21,25 +22,25 @@ const Skills = () => {
 	const queryId = searchParams.get('q');
 
 	const formSchema = z.object({
-		skill: z.string(),
+		skill: z.string().min(1, 'Skill name is required'),
 		subSkills: z.string().optional(),
 	});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		// mode: 'onChange',
+		mode: 'onChange',
 	});
 
-	const { control, handleSubmit, setValue, watch } = form;
+	const { control, handleSubmit, setValue } = form;
 
 	const editSkill = skills.filter((s) => s.id === queryId).at(0);
 
 	useEffect(() => {
-		if (queryId) {
-			setValue('skill', editSkill!.skill);
-			setValue('subSkills', editSkill!.subSkills);
+		if (queryId && editSkill) {
+			setValue('skill', editSkill.skill);
+			setValue('subSkills', editSkill.subSkills);
 		}
-	}, [queryId]);
+	}, [queryId, editSkill]);
 
 	const onSubmit = (values: z.infer<typeof formSchema>) => {
 		const { skill, subSkills } = values;
@@ -77,8 +78,19 @@ const Skills = () => {
 	};
 
 	const handleDelete = () => {
-		const selectedSkill = skills.filter((s) => s.id !== queryId);
-		setSkills(selectedSkill);
+		const deletedSkill = skills.find((s) => s.id === queryId);
+		const remainingSkills = skills.filter((s) => s.id !== queryId);
+		setSkills(remainingSkills);
+		toast.success(`Deleted "${deletedSkill?.skill}"`, {
+			action: {
+				label: 'Undo',
+				onClick: () => {
+					if (deletedSkill) {
+						setSkills([...remainingSkills, deletedSkill]);
+					}
+				},
+			},
+		});
 		router.back();
 	};
 
@@ -90,7 +102,9 @@ const Skills = () => {
 					className="max-h-screen overflow-scroll no-scrollbar"
 				>
 					<section className="card-layout">
-						<h2 className="card-header">Edit Skill</h2>
+						<h2 className="card-header">
+							{queryId ? 'Edit' : 'Add'} Skill
+						</h2>
 						<DefaultForm
 							control={control}
 							name="skill"

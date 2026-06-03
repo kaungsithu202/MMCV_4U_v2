@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--canvas: oklch(94% 0.028 64);
+	--paper: oklch(98% 0.014 72);
+	--paper-deep: oklch(93% 0.034 68);
+	--ink: oklch(25% 0.062 344);
+	--muted: oklch(48% 0.045 18);
+	--clay: oklch(77% 0.047 48);
+	--plum: oklch(32% 0.095 338);
+	--plum-soft: oklch(91% 0.04 343);
+	--terracotta: oklch(55% 0.145 31);
+	--terracotta-deep: oklch(47% 0.14 27);
+	--marigold: oklch(79% 0.12 76);
+	--danger: oklch(52% 0.17 25);
+}
+
+body {
+	background: var(--canvas);
+	color: var(--ink);
+}
+
 ul {
 	list-style-type: disc;
 }
@@ -13,10 +33,10 @@ ul {
 }
 @layer components {
 	.download-btn {
-		@apply flex items-center gap-1 px-5 py-2 text-white rounded-full btn-effect bg-gradient-one;
+		@apply flex items-center gap-2 px-5 py-2 rounded-full btn-effect bg-terracotta text-paper shadow-sm hover:bg-[var(--terracotta-deep)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--marigold)];
 	}
 	.icon-btn {
-		@apply flex items-center justify-center bg-gradient-to-r from-gradient-one to-gradient-two w-8 h-8 rounded-xl hover:opacity-80;
+		@apply flex items-center justify-center bg-plum text-paper w-8 h-8 rounded-xl hover:bg-terracotta;
 	}
 }
 @layer utilities {
@@ -27,16 +47,16 @@ ul {
 		@apply flex items-center justify-between;
 	}
 	.card-header {
-		@apply font-extrabold text-2xl;
+		@apply font-extrabold text-2xl text-ink;
 	}
 	.btn-effect {
-		@apply active:scale-95 hover:drop-shadow-lg;
+		@apply active:scale-95 transition-all duration-200;
 	}
 	.icon-size {
 		@apply w-5 h-auto;
 	}
 	.card-layout {
-		@apply bg-white round  p-10  leading-10 cursor-pointer drop-shadow-md;
+		@apply bg-paper border border-clay round p-10 leading-10 cursor-pointer shadow-sm;
 	}
 }
 .no-scrollbar::-webkit-scrollbar {
@@ -51,7 +71,7 @@ ul {
 .three-body {
 	--uib-size: 35px;
 	--uib-speed: 0.8s;
-	--uib-color: #5d3fd3;
+	--uib-color: var(--terracotta);
 	position: relative;
 	display: inline-block;
 	height: var(--uib-size);
@@ -159,5 +179,5 @@ ul {
 	height: 5rem;
 }
 .ql-toolbar.ql-snow {
-	@apply bg-purple-300;
+	@apply bg-secondary border-clay;
 }
